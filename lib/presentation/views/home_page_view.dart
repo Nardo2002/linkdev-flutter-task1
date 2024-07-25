@@ -37,7 +37,7 @@ class HomePageView extends ConsumerWidget {
                 return LandscapeLayout(articles: articles);
               } else {
                 // print('webbbbbbbb: $articles');
-                return WebLayout(articles: articles, size: constraints.maxWidth * 0.3, username: username);
+                return WebLayout(articles: articles, username: username);
               }
             },
           ),

@@ -10,11 +10,12 @@ class DrawerTile extends StatelessWidget {
   final String title;
   final ImageIcon icon;
   final double size;
+  final _tilePaddingRatio = 0.01;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(size * 0.01),
+      padding: EdgeInsets.all(size * _tilePaddingRatio),
       child: ListTile(
         leading: icon,
         title: Text(
