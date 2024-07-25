@@ -8,9 +8,9 @@ class DetailsView extends ConsumerWidget {
   final double size;
   const DetailsView({required this.article, required this.size, super.key});
 
-  Future<void> _launchUrl(Uri _url) async {
-  if (!await launchUrl(_url)) {
-    throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(Uri url) async {
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
   }
 }
 
@@ -33,36 +33,39 @@ class DetailsView extends ConsumerWidget {
         backgroundColor: Colors.grey[200],
         body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
                 padding: EdgeInsets.all(size * 0.05),
                 child: Container(
                   color: Colors.white,
+                  alignment: Alignment.center,
                   child: Column(
                     children: [
-                      Container(
-                          width: size * 0.9,
+                      if (article.urlToImage != null)
+                        Image.network(
+                          article.urlToImage,
                           height: size * 0.5,
-                          child: Image.network(
-                            article.urlToImage,
-                          )),
+                          fit: BoxFit.contain,
+                        ),
                       Padding(
                         padding: EdgeInsets.all(size * 0.03),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(article.title,
-                                style: TextStyle(
-                                    fontSize: size * 0.05,
-                                    fontWeight: FontWeight.w300)),
-                            Text('By ${article.author}',
-                                style: TextStyle(
-                                    fontSize: size * 0.03, color: Colors.grey)),
-                            Text(article.description,
-                                style: TextStyle(
-                                    fontSize: size * 0.03, color: Colors.grey))
-                          ],
+                        child: SizedBox(
+                          width: size * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(article.title,
+                                  style: TextStyle(
+                                      fontSize: size * 0.05,
+                                      fontWeight: FontWeight.w300)),
+                              Text('By ${article.author}',
+                                  style: TextStyle(
+                                      fontSize: size * 0.03, color: Colors.grey)),
+                              Text(article.description,
+                                  style: TextStyle(
+                                      fontSize: size * 0.03, color: Colors.grey))
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -71,20 +74,23 @@ class DetailsView extends ConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    )),
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
+                child: SizedBox(
+                  width: size * 0.9,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                      )),
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                    ),
+                    onPressed: () {
+                      _launchUrl(Uri.parse(article.url));
+                    },
+                    child: Text('OPEN WEBSITE',
+                        style: TextStyle(
+                            fontSize: size * 0.04, color: Colors.white, fontWeight: FontWeight.w300)),
                   ),
-                  onPressed: () {
-                    _launchUrl(Uri.parse(article.url));
-                  },
-                  child: Text('OPEN WEBSITE',
-                      style: TextStyle(
-                          fontSize: size * 0.04, color: Colors.white, fontWeight: FontWeight.w300)),
                 ),
               )
             ],
