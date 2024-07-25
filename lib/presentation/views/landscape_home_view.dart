@@ -5,6 +5,7 @@ import 'package:news_app/widgets/home_page_article.dart';
 class LandscapeLayout extends StatelessWidget {
   final List<Article> articles;
   const LandscapeLayout({required this.articles, super.key});
+  final _landscapeSizeRatio = 0.55;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class LandscapeLayout extends StatelessWidget {
       children: List.generate(articles.length, (index) {
         return HomePageArticle(
           article: articles[index],
-          size: MediaQuery.of(context).size.width * 0.55,
+          size: MediaQuery.of(context).size.width * _landscapeSizeRatio,
         );
       }),
     );

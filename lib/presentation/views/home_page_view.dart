@@ -11,6 +11,7 @@ class HomePageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final newsState = ref.watch(newsViewModelProvider);
+    final newsViewModel = ref.read(newsViewModelProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -31,16 +32,26 @@ class HomePageView extends ConsumerWidget {
           builder: (context, constraints) {
             if (constraints.maxWidth < 600) {
               return MobileLayout(articles: articles);
-            } 
-             else if (constraints.maxWidth < 1100) {
-              return LandscapeLayout(articles: articles); 
+            } else if (constraints.maxWidth < 1100) {
+              return LandscapeLayout(articles: articles);
             } else {
-              return WebLayout(articles: articles); 
+              return WebLayout(articles: articles);
             }
           },
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text('Error: $error')),
+        error: (error, stack) => RefreshIndicator(
+          onRefresh: () async {
+            newsViewModel.fetchNews();
+          },
+          child: ListView(
+            children: [
+              Center(child: Text('Error: $error')),
+              const SizedBox(height: 20),
+              const Center(child: Text('Pull down to retry')),
+            ],
+          ),
+        ),
       ),
     );
   }

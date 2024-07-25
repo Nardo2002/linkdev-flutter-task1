@@ -11,34 +11,36 @@ class HomePageArticle extends StatelessWidget {
 
   final Article article;
   final double size;
+  final _boxPaddingRatio = 0.05;
+  final _titleFontSizeRatio = 0.05;
+  final _articleFontSizeRatio = 0.03;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(size * 0.05),
-      child: Container(
+      padding: EdgeInsets.all(size * _boxPaddingRatio),
+      child: ColoredBox(
         color: Colors.white,
         child: Column(
           children: [
-            Image.network(article.urlToImage),
+            if(article.urlToImage != null)
+              Image.network(article.urlToImage!),
             Padding(
-              padding: EdgeInsets.all(size * 0.04),
+              padding: EdgeInsets.all(size * _boxPaddingRatio),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(article.title,
                       style: TextStyle(
-                          fontSize: size * 0.05,
-                          fontWeight: FontWeight.w300)),
+                          fontSize: size * _titleFontSizeRatio, fontWeight: FontWeight.w300)),
                   Text('By ${article.author}',
-                      style: TextStyle(
-                          fontSize: size * 0.03,
-                          color: Colors.grey)),
+                      style:
+                          TextStyle(fontSize: size * _articleFontSizeRatio, color: Colors.grey)),
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: Text(DateFormat.yMMMMd().format(article.publishedAt), style: TextStyle(
-                            fontSize: size * 0.03,
-                            color: Colors.grey)),
+                    child: Text(DateFormat.yMMMMd().format(article.publishedAt),
+                        style: TextStyle(
+                            fontSize: size * _articleFontSizeRatio, color: Colors.grey)),
                   )
                 ],
               ),
