@@ -6,6 +6,10 @@ import 'package:url_launcher/url_launcher.dart';
 class DetailsView extends ConsumerWidget {
   final Article article;
   final double size;
+  final _largeSizeRatio = 0.05;
+  final _smallSizeRatio = 0.03;
+  final _widthRatio = 0.9;
+  final _buttonFontSizeRatio = 0.04;
   const DetailsView({required this.article, required this.size, super.key});
 
   Future<void> _launchUrl(Uri url) async {
@@ -35,7 +39,7 @@ class DetailsView extends ConsumerWidget {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(size * 0.05),
+                padding: EdgeInsets.all(size * _largeSizeRatio),
                 child: Container(
                   color: Colors.white,
                   alignment: Alignment.center,
@@ -48,22 +52,22 @@ class DetailsView extends ConsumerWidget {
                           fit: BoxFit.contain,
                         ),
                       Padding(
-                        padding: EdgeInsets.all(size * 0.03),
+                        padding: EdgeInsets.all(size * _smallSizeRatio),
                         child: SizedBox(
-                          width: size * 0.9,
+                          width: size * _widthRatio,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(article.title,
                                   style: TextStyle(
-                                      fontSize: size * 0.05,
+                                      fontSize: size * _largeSizeRatio,
                                       fontWeight: FontWeight.w300)),
                               Text('By ${article.author}',
                                   style: TextStyle(
-                                      fontSize: size * 0.03, color: Colors.grey)),
+                                      fontSize: size * _smallSizeRatio, color: Colors.grey)),
                               Text(article.description,
                                   style: TextStyle(
-                                      fontSize: size * 0.03, color: Colors.grey))
+                                      fontSize: size * _smallSizeRatio, color: Colors.grey))
                             ],
                           ),
                         ),
@@ -75,7 +79,7 @@ class DetailsView extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  width: size * 0.9,
+                  width: size * _widthRatio,
                   child: ElevatedButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -89,7 +93,7 @@ class DetailsView extends ConsumerWidget {
                     },
                     child: Text('OPEN WEBSITE',
                         style: TextStyle(
-                            fontSize: size * 0.04, color: Colors.white, fontWeight: FontWeight.w300)),
+                            fontSize: size * _buttonFontSizeRatio, color: Colors.white, fontWeight: FontWeight.w300)),
                   ),
                 ),
               )
