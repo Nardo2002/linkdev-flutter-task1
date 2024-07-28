@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/domain/models/article.dart';
+import 'package:news_app/presentation/views/details_view.dart';
 import 'package:intl/intl.dart';
 
 class HomePageArticle extends StatelessWidget {
@@ -19,6 +20,18 @@ class HomePageArticle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(size * _boxPaddingRatio),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailsView(
+                article: article,
+                size: size,
+              ),
+            ),
+          );
+        },
       child: ColoredBox(
         color: Colors.white,
         child: Column(
@@ -47,6 +60,7 @@ class HomePageArticle extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

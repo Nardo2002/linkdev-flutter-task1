@@ -4,9 +4,11 @@ import '../view_models/news_viewmodel.dart';
 import 'mobile_home_view.dart';
 import 'landscape_home_view.dart';
 import 'web_home_view.dart';
+import '../../widgets/drawer.dart';
 
 class HomePageView extends ConsumerWidget {
   const HomePageView({super.key});
+  final username = 'Tony Roshdy';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,6 +20,7 @@ class HomePageView extends ConsumerWidget {
         title: const Text('LINK DEVELOPMENT',
             style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
             icon: const ImageIcon(AssetImage('assets/images/search.png')),
@@ -35,7 +38,10 @@ class HomePageView extends ConsumerWidget {
             } else if (constraints.maxWidth < 1100) {
               return LandscapeLayout(articles: articles);
             } else {
-              return WebLayout(articles: articles);
+              return WebLayout(
+                articles: articles,
+                username: username,
+              );
             }
           },
         ),
@@ -53,6 +59,14 @@ class HomePageView extends ConsumerWidget {
           ),
         ),
       ),
+      drawer: MediaQuery.of(context).size.width < 600
+          ? CustomDrawer(
+              username: username, size: MediaQuery.of(context).size.width * 0.6)
+          : MediaQuery.of(context).size.width < 1100
+              ? CustomDrawer(
+                  username: username,
+                  size: MediaQuery.of(context).size.width * 0.5)
+              : null,
     );
   }
 }
